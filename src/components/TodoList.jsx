@@ -4,33 +4,25 @@ import AddEventModalForm from "./AddEventModalForm";
 
 function TodoList() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [todoCount, setTodoCount] = useState(0)
   const [todos, setTodos] = useState([])
   const [todoName, setTodoName] = useState('Name')
   const [todoDatetime, setTodoDatetime] = useState(null)
   const [todoNote, setTodoNote] = useState('Note')
 
   useEffect(() => {
-    setTodos([...todos, {
-      id: todoCount+1, 
-      name: todoName, 
-      datetime: todoDatetime,
-      note: todoNote }])
-    localStorage.setItem('todos', JSON.stringify(todos))
-  }, [todoCount])
-
-  useEffect(() => {
-    const savedTodos = localStorage.getItem('todos')
+    const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
-      setTodos(JSON.parse(savedTodos))
-    }
+      const parsedTodos = JSON.parse(savedTodos);
+      if (Array.isArray(parsedTodos) && parsedTodos.length > 0) {
+        setTodos(parsedTodos);
+      }
+    } 
   }, [])
 
 
 
   return(
     <div className="flex flex-col w-full h-[93%] items-center justify-center ">
-      <p>Todo count: {todoCount}</p>
       <div className="flex flex-row w-full items-center justify-center">
         {todos.map((item) => (
           <TodoItem todo={item} />
@@ -46,7 +38,14 @@ function TodoList() {
       <AddEventModalForm isOpen={isModalOpen} 
       onClose={() => setIsModalOpen(false)} 
       setTodo={() => {
-        setTodoCount(todoCount + 1)
+        const newTodo = {
+          id: Date.now(),
+          name: todoName,
+          datetime: todoDatetime,
+          note: todoNote
+        }
+        localStorage.setItem('todos', JSON.stringify([...todos, newTodo]))
+        setTodos([...todos, newTodo])
         setIsModalOpen(false)
       }}>
         <input type="text" name="todoNameInput" id="todoNameInputId" placeholder="Todo name" 
