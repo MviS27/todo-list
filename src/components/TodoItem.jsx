@@ -1,7 +1,7 @@
-function TodoItem({ name }) {
+function TodoItem({ todo }) {
   return(
     <div>
-      <p>{name}</p>
+      <p>{todo.name}</p>
     </div>
   )
 }
