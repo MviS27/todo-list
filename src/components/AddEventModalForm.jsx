@@ -1,5 +1,3 @@
-
-
 function AddEventModalForm({ isOpen, onClose, setTodo, children }){
 	if (!isOpen) return null
 
@@ -10,7 +8,7 @@ function AddEventModalForm({ isOpen, onClose, setTodo, children }){
         {children}
 				<p className="absolute top-0 left-2">Create todo</p>
 				<button 
-        className="absolute bottom-1 hover:bg-blue-400 bg-blue-300 rounded pl-2 pr-4 p-1 font-semibold shadow-lg"
+        className="absolute bottom-1 hover:bg-green-400 bg-green-300 rounded pl-4 pr-4 p-1 font-semibold shadow-lg"
         onClick={setTodo}>
           Create
       </button> 
